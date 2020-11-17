@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            Edit_Profile
+        {% endblock %}
+    </title>
+</head>
+<body>
+{% block content %}
+
+    <h1>Edit Settings....</h1>
+    <br><br>
+
+    {{ user.profile.bio }}
+
+    <br><br>
+     <div class="form-group">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}   <!--p represt is the paragraph tah <P>// we can also use ul/table-->
+            <button class="btn btn-info">Update Profile</button>
+        </form>
+     </div>
+
+{% endblock %}
+</body>
+</html>
+
+

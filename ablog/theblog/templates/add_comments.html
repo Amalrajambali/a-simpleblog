@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            Comment a blog post
+        {% endblock %}
+    </title>
+</head>
+<body>
+{% block content %}
+
+
+        <h1>Add Comment....</h1>
+        <br>
+         <div class="form-group">
+            <form method="post" >
+                {% csrf_token %}  <!-- every form tag must have this csrf-->
+                {{ form.as_p }}   <!--p represt is the paragraph tah <P>// we can also use ul/table-->
+                <button class="btn btn-info">Add Comment</button>
+            </form>
+         </div>
+
+{% endblock %}
+</body>
+</html>

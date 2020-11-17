@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            This a blog block
+        {% endblock %}
+    </title>
+</head>
+<body>
+{% block content %}
+<h1>Post</h1>
+<ul>
+{% for post in object_list %}
+    <li>
+        <a href="{%url 'article-detail' pk=post.pk %}"> {{ post.title }} </a>
+        -<a href="{%url 'category'  post.category|slugify %}">{{ post.category }}</a>
+          - {{ post.author }} |
+        {{ post.author.first_name }}
+        {{ post.author.last_name }}
+          - {{post.post_date}}
+
+        {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}
+                <small>
+                    - <a href="{%url 'update_post' pk=post.pk %}">(Edit)</a>
+                      <a href="{%url 'delete_post' pk=post.pk %}">(delete)</a>
+                </small>
+             {% endif %}
+        {% endif %}
+        <br>
+        {{ post.snippet }}
+        <!--{{ post.body|safe|slice:":200" }} -->
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+</body>
+</html>

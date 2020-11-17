@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            create a new profile page
+        {% endblock %}
+    </title>
+</head>
+<body>
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <h1>Create Profile Page...</h1>
+        <br>
+         <div class="form-group">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}  <!-- every form tag must have this csrf-->
+
+                {{ form.as_p }}   <!--p represt is the paragraph tah <P>// we can also use ul/table-->
+                <button class="btn btn-info">Create profile page</button>
+            </form>
+         </div>
+
+    {% else %}
+
+    You are not allowed here!!!!
+
+    {% endif %}
+
+{% endblock %}
+</body>
+</html>

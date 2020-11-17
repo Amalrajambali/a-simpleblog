@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            Edit blog post
+        {% endblock %}
+    </title>
+</head>
+<body>
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+        <h1>Update Post....</h1>
+        <br>
+         <div class="form-group">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}   <!--p represt is the paragraph tah <P>// we can also use ul/table-->
+                <button class="btn btn-info">Update</button>
+            </form>
+         </div>
+        {% else %}
+             You are not allowed here!!!!(and you know it..!!!!)
+        {% endif %}
+    {% else %}
+    You are not allowed here!!!!
+    {% endif %}
+
+{% endblock %}
+</body>
+</html>
