@@ -17,7 +17,7 @@
                 {{post.post_date}}
 
         {% if user.is_authenticated %}
-            {% if user.id == post.author.id %}
+            {% if user.id == post.author.id %}  <!--#login cheytha userum post cheytha userum same annon check cheyan-->
             - <a href="{%url 'update_post' pk=post.pk %}">(Edit)</a>
               <a href="{%url 'delete_post' pk=post.pk %}">(delete)</a>
             {% endif %}
@@ -26,7 +26,7 @@
     </small><BR>
     <hr>
         {% if post.header_image %}
-                <img src="{{ post.header_image.url}}"><br><br>
+                <img src="{{ post.header_image.url}}" width="400" height="300"><br><br>
         {% endif %}
 
     {{ post.body|safe}}
@@ -59,7 +59,7 @@
 
           <div class="col-md-2">
               {% if post.author.profile.profile_pic %}
-                    <img src="{{ post.author.profile.profile_pic.url }}" class="card-img" alt="...">
+                    <img src="{{ post.author.profile.profile_pic.url }}" class="card-img" alt="..." >
               {% else %}
                     <img src="{% static 'theblog/images/defaultpropic.jpg' %}" class="card-img" alt="...">
               {% endif %}
@@ -102,7 +102,7 @@
       </div>
     </div>
 
-    `<h2><i>Comments.......</i></h2>
+    <h2><i>Comments.......</i></h2>
      <br>
             {% if not post.comments.all %}
                 No comments yet.....<a href="{%url 'add_comment' pk=post.pk%}">Add one</a>
@@ -110,8 +110,8 @@
                 <a href="{%url 'add_comment' pk=post.pk%}">Add comments</a>
                 <br><br>
 
-                    {% for comment in post.comments.all %}
-                        <strong>
+                    {% for comment in post.comments.all %} <!-- comment model is connected with post model we can call comment model from the post model-->
+                        <strong>                            <!-- comments is used because in related name we name as comments-->
                         {{ comment.name }} -
                         {{ comment.date_added }}
                         </strong>

@@ -1,70 +1,76 @@
+#actually the data base of the project
+
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User  #calling the super user that we created here admin
 from django.urls import reverse
-from datetime import datetime,date
+from datetime import datetime, date
 from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 
 class Category(models.Model):
-    name =models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        #return reverse('article-detail',args=(str(self.id)))
-         return reverse('home')
+        # return reverse('article-detail',args=(str(self.id)))
+        return reverse('home')
 
-#--------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------
 
 class Profile(models.Model):
-    user =models.OneToOneField(User,null=True,on_delete=models.CASCADE)
-    bio  =models.TextField()
-    profile_pic=models.ImageField(null=True,blank=True,upload_to="images/profile/")
-    website_url =models.CharField(max_length=255,null=True,blank=True)
-    facebook_url =models.CharField(max_length=255,null=True,blank=True)
-    linkedin_url =models.CharField(max_length=255,null=True,blank=True)
-    instagram_url =models.CharField(max_length=255,null=True,blank=True)
-    pintrest_url =models.CharField(max_length=255,null=True,blank=True)
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    bio = models.TextField()
+    profile_pic = models.ImageField(null=True, blank=True, upload_to="images/profile/")
+    website_url = models.CharField(max_length=255, null=True, blank=True)
+    facebook_url = models.CharField(max_length=255, null=True, blank=True)
+    linkedin_url = models.CharField(max_length=255, null=True, blank=True)
+    instagram_url = models.CharField(max_length=255, null=True, blank=True)
+    pintrest_url = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return str(self.user)
 
     def get_absolute_url(self):
-         return reverse('home')
-#---------------------------------------------------
+        return reverse('home')
+
+
+# ---------------------------------------------------
 
 class Post(models.Model):
-    title =models.CharField(max_length=255)
-    header_image=models.ImageField(null=True,blank=True,upload_to="images/")
-    title_tag =models.CharField(max_length=255)
-    author=models.ForeignKey(User,on_delete=models.CASCADE) #user account delete cheythal athil ulla blogs okke delete avum
-    body  =RichTextField(blank=True,null=True)
-    #body  =models.TextField()
-    post_date =models.DateField(auto_now_add=True)
-    category=models.CharField(max_length=255,default='coding')
-    snippet=models.CharField(max_length=255)
-    likes =models.ManyToManyField(User,related_name='blog_posts')
+    title = models.CharField(max_length=255)
+    header_image = models.ImageField(null=True, blank=True, upload_to="images/")
+    title_tag = models.CharField(max_length=255)
+    author = models.ForeignKey(User,on_delete=models.CASCADE)  # user account delete cheythal athil ulla blogs okke delete avum
+    body = RichTextField(blank=True, null=True)
+    # body  =models.TextField()
+    post_date = models.DateField(auto_now_add=True)
+    category = models.CharField(max_length=255, default='coding')
+    snippet = models.CharField(max_length=255)
+    likes = models.ManyToManyField(User, related_name='blog_posts')
 
     def total_likes(self):
         return self.likes.count()
 
-
     def __str__(self):
-        return self.title +"|"+str(self.author)
+        return self.title + "|" + str(self.author)
 
-    def get_absolute_url(self):
-        #return reverse('article-detail',args=(str(self.id)))
-         return reverse('home')
+    def get_absolute_url(self):        #nthengilum cheyth submit adicha engot ponam / deletepost success_url = reverse_lazy use cheyanam
+        # return reverse('article-detail',args=(str(self.id)))
+        return reverse('home')
 
-#---------------------------------------------------
+
+# ---------------------------------------------------
 
 class Comment(models.Model):
-    post= models.ForeignKey(Post,related_name="comments",on_delete=models.CASCADE)
-    name= models.CharField(max_length=255)
-    body =models.TextField()
-    date_added=models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE) #foreignkey is connnect this model to ani=other model here|| comment to post model
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '%s - %s' % (self.post.title,self.name)
+        return '%s - %s' % (self.post.title, self.name)

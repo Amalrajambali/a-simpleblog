@@ -15,9 +15,9 @@
     {% if user.is_authenticated %}
         <h1>Add Post....</h1>
         <br>
-         <div class="form-group">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}  <!-- every form tag must have this csrf-->
+         <div class="form-group">  <!--forms il style cheyombol use form-class use cheyenegil ith venam form group -->
+            <form method="post" enctype="multipart/form-data"> <!--encypte is for image uploading-->
+                {% csrf_token %}  <!-- every form tag must have this csrf protect from hackers at the time of submission-->
                 {{ form.media }}  <!-- for adding a texteditor-->
                 {{ form.as_p }}   <!--p represt is the paragraph tah <P>// we can also use ul/table-->
                 <button class="btn btn-info">Post</button>
